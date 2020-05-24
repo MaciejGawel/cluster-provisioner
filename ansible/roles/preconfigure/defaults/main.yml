@@ -1,0 +1,5 @@
+---
+
+preconfigure_packages:
+  - vim
+  - wget

@@ -1,0 +1,14 @@
+---
+
+- name: Update all packages
+  yum:
+    name: '*'
+    state: latest
+  become: yes
+
+- name: Install basic packages
+  yum:
+    name: "{{ item }}"
+    state: latest
+  become: yes
+  loop: "{{ preconfigure_packages }}"
