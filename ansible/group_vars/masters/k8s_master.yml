@@ -1,0 +1,6 @@
+---
+
+k8s_master_k8s_version: "{{ k8s_version }}"
+k8s_master_cc_ip: "{{ master_cc_ip }}"
+k8s_master_pod_subnet: "{{ pod_subnet }}"
+k8s_master_service_subnet: "{{ service_subnet }}"

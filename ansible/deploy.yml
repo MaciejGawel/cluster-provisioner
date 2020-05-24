@@ -1,0 +1,32 @@
+---
+
+- name: Preconfigure cluster
+  hosts: all
+  roles:
+    - preconfigure
+
+- name: Configure cluster
+  hosts: all
+  gather_facts: false
+  roles:
+    - docker
+    - k8s_prepare
+
+- name: Install Kuberntes master
+  hosts: masters
+  gather_facts: false
+  roles:
+    - role: k8s_master
+      when: inventory_hostname == initial_master
+
+- name: Join Kubernetes workers
+  hosts: workers
+  gather_facts: false
+  roles:
+    - k8s_worker
+
+- name: Install cloud core components
+  hosts: masters
+  gather_facts: false
+  roles:
+    - calico

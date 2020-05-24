@@ -1,0 +1,4 @@
+---
+
+calico_k8s_cli_host: "{{ k8s_cli_host }}"
+calico_pod_subnet: "{{ pod_subnet }}"
