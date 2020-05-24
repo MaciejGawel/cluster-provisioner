@@ -1,0 +1,15 @@
+---
+
+k8s_prepare_k8s_version: 1.18.2
+k8s_prepare_packages:
+  - "kubeadm-{{ k8s_prepare_k8s_version }}"
+  - "kubelet-{{ k8s_prepare_k8s_version }}"
+  - "kubectl-{{ k8s_prepare_k8s_version }}"
+
+k8s_prepare_hosts_file: /etc/hosts
+k8s_prepare_master_cc_ip: 10.10.0.10
+
+k8s_prepare_firewall_ports:
+  - 179/tcp
+  - 6443/tcp
+  - 10250/tcp

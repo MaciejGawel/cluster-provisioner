@@ -1,0 +1,58 @@
+---
+
+- name: Add Kubernetes repository
+  yum_repository:
+    name: kuberentes
+    description: Kubernetes repo
+    baseurl: https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
+    gpgcheck: true
+    repo_gpgcheck: true
+    gpgkey:
+      - https://packages.cloud.google.com/yum/doc/yum-key.gpg
+      - https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+  become: true
+
+- name: Install Kubernetes packages
+  yum:
+    name: "{{ item }}"
+    state: latest
+  become: true
+  loop: "{{ k8s_prepare_packages }}"
+
+- name: Add Kubernetes master to hosts file
+  blockinfile:
+    path: "{{ k8s_prepare_hosts_file }}"
+    block: "{{ lookup('template', 'hosts.j2') }}"
+    create: true
+    marker: "# {mark} ANSIBLE MANAGED"
+  become: true
+
+- name: Disable SWAP entries in fstab
+  replace:
+    backup: true
+    path: /etc/fstab
+    regexp: '^([^\s#]+[^\s]*\s+(none|swap)\s+swap\s+.*)$'
+    replace: '# -k8s- \1'
+  become: true
+
+- name: Check active SWAPs
+  shell: |
+    set -o pipefail
+    cat /proc/swaps | sed 1d | cut -d" " -f1
+  changed_when: false
+  register: k8s_prepare_swap_status
+
+- name: Disable all active SWAPs
+  command: swapoff -a
+  when: k8s_prepare_swap_status.stdout_lines|length > 0
+  become: true
+
+- name: Open firewall ports
+  firewalld:
+    port: "{{ item }}"
+    permanent: true
+    state: enabled
+    immediate: true
+  ignore_errors: true
+  loop: "{{ k8s_prepare_firewall_ports }}"
+  become: true
