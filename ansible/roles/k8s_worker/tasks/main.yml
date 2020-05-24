@@ -1,0 +1,11 @@
+---
+
+- name: Create token
+  delegate_to: "{{ k8s_worker_k8s_cli_host }}"
+  command: kubeadm token create --ttl 2h --print-join-command
+  register: k8s_worker_join_command
+  become: true
+
+- name: Worker join
+  shell: "{{ k8s_worker_join_command.stdout }}"
+  become: true
