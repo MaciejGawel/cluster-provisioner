@@ -1,0 +1,14 @@
+apiVersion: kubeadm.k8s.io/v1beta2
+kind: InitConfiguration
+localAPIEndpoint:
+  advertiseAddress: "{{ k8s_master_cc_ip }}"
+  bindPort: 6443
+---
+apiVersion: kubeadm.k8s.io/v1beta2
+kind: ClusterConfiguration
+kubernetesVersion: "{{ k8s_master_k8s_version }}"
+controlPlaneEndpoint: "k8smaster:6443"
+networking:
+  podSubnet: "{{ k8s_master_pod_subnet }}"
+  dnsDomain: cluster.local
+  serviceSubnet: "{{ k8s_master_service_subnet }}"

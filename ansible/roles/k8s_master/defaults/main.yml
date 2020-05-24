@@ -1,0 +1,10 @@
+---
+
+k8s_master_kubeadm_config_file: /etc/kubeadm/kubeadm.conf
+k8s_master_kube_admin_config_file: /etc/kubernetes/admin.conf
+k8s_master_kube_config_file: "{{ ansible_env.HOME }}/.kube/config"
+
+k8s_master_k8s_version: '1.18.2'
+k8s_master_cc_ip: '10.10.0.10'
+k8s_master_pod_subnet: 10.11.0.0/16
+k8s_master_service_subnet: 10.10.1.0/24
