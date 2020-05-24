@@ -1,0 +1,8 @@
+---
+
+calico_k8s_cli_host: "{{ inventory_hostname }}"
+
+calico_pod_subnet: 10.11.0.0/16
+
+calico_manifests_dir: /var/lib/calico_manifests
+calico_manifests_dir_require_become: true

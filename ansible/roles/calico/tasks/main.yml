@@ -1,0 +1,35 @@
+---
+
+- name: Install Calico
+  run_once: true
+  delegate_to: "{{ calico_k8s_cli_host }}"
+  delegate_facts: true
+  block:
+    - name: Ensure Calico manifests home exists
+      file:
+        path: "{{ calico_manifests_dir }}"
+        owner: "{{ ansible_user_id | default(ansible_user | default(omit)) }}"
+        group: "{{ ansible_user_gid | default(omit) }}"
+        mode: 0775
+        state: directory
+      become: "{{ calico_manifests_dir_require_become|bool }}"
+
+    - name: Generate Calico manifests file
+      template:
+        src: "{{ item }}.yaml.j2"
+        dest: "{{ calico_manifests_dir }}/{{ item }}.yaml"
+      loop:
+        - rbac-kdd
+        - calico
+      become: "{{ calico_manifests_dir_require_become|bool }}"
+
+    - name: Deploy Calico to k8s
+      command: "kubectl apply -f {{ calico_manifests_dir }}/{{ item }}.yaml"
+      loop:
+        - rbac-kdd
+        - calico
+      register: calico_kubectl_apply_result
+      changed_when:
+        "'created' in calico_kubectl_apply_result.stdout
+        or 'changed' in calico_kubectl_apply_result.stdout
+        or 'configured' in calico_kubectl_apply_result.stdout"
