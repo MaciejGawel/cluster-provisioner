@@ -1,0 +1,28 @@
+---
+
+- name: Install prerequisites
+  yum:
+    name: "{{ item }}"
+    state: latest
+  become: true
+  loop:
+    - yum-utils
+    - device-mapper-persistent-data
+    - lvm2
+
+- name: Add Docker CE repository
+  shell: "yum-config-manager --add-repo {{ docker_repo }}"
+  become: true
+
+- name: Install Docker package
+  yum:
+    name: docker-ce
+    state: latest
+  become: true
+
+- name: Enable and start Docker
+  systemd:
+    name: docker
+    state: started
+    enabled: true
+  become: true
