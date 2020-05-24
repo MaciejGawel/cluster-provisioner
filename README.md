@@ -16,8 +16,15 @@ yum install vagrant_2.2.9_x86_64.rpm
 vagrant plugin install vagrant-libvirt
 ```
 
-Add Centos boxx
+Add Centos box
 
 ```sh
 vagrant box add centos/7 --provider=libvirt
+```
+
+Install Ansible
+
+```sh
+yum install epel-release
+yum install ansible
 ```
