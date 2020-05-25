@@ -32,3 +32,14 @@
     group: "{{ ansible_user_gid | default(omit) }}"
     remote_src: true
   become: true
+
+- name: Install bash completion
+  yum:
+    name: bash-completion
+    state: latest
+  become: true
+
+- name: Configure bash completion for kubernetes
+  lineinfile:
+    path: "{{ k8s_master_bashrc_file }}"
+    line: source <(kubectl completion bash)

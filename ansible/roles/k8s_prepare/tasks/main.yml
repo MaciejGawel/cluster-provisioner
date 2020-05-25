@@ -47,12 +47,18 @@
   when: k8s_prepare_swap_status.stdout_lines|length > 0
   become: true
 
+- name: Ensure firewall is running
+  systemd:
+    name: firewalld
+    state: started
+    enabled: true
+  become: true
+
 - name: Open firewall ports
   firewalld:
     port: "{{ item }}"
     permanent: true
     state: enabled
     immediate: true
-  ignore_errors: true
   loop: "{{ k8s_prepare_firewall_ports }}"
   become: true
