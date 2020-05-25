@@ -2,6 +2,8 @@
 
 ## Usage
 
+### Host prerequisites
+
 Install dependencies
 
 ```sh
@@ -27,4 +29,18 @@ Install Ansible
 ```sh
 yum install epel-release
 yum install ansible
+```
+
+### Deploy an environment
+
+The simple deployment can be done with the following command
+
+```sh
+vagrant up
+```
+
+To deploy multiple environments create multiple config files
+
+```sh
+CONFIG=config.yml vagrant up
 ```
