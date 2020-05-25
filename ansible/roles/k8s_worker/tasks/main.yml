@@ -4,8 +4,8 @@
   import_tasks: gather_facts.yml
 
 - name: Configure worker when not ready
-  when: not k8s_worker facts
-    or k8s_worker.facts.status is not search('\\bReady\\b')
+  when: not k8s_worker_facts
+    or k8s_worker_facts.status is not search('\\bReady\\b')
   block:
     - name: Create token
       delegate_to: "{{ k8s_worker_k8s_cli_host }}"

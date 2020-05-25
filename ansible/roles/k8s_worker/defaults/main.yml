@@ -1,3 +1,4 @@
 ---
 
 k8s_worker_k8s_cli_host: "{{ inventory_hostname }}"
+k8s_worker_name: "{{ inventory_hostname }}"
