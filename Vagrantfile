@@ -9,6 +9,7 @@ def deploy_kubernetes(machine)
   machine.vm.provision 'ansible' do |ansible|
     ansible.playbook = 'ansible/deploy.yml'
     ansible.limit = 'all'
+    # ansible.verbose = '-vvv'
     ansible.groups = {
       'masters' => ['node0'],
       'workers' => ["node[1:#{NODE_COUNT}"],

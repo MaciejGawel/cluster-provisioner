@@ -1,0 +1,15 @@
+---
+
+- name: Master init
+  block:
+    - name: Template kubeadm config
+      template:
+        src: kubeadm.conf.j2
+        dest: "{{ k8s_master_kubeadm_config_file }}"
+      become: true
+
+    - name: Master init
+      shell: |
+        kubeadm reset --force
+        kubeadm init --config "{{ k8s_master_kubeadm_config_file }}" --upload-certs
+      become: true

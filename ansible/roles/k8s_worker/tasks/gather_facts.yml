@@ -1,0 +1,18 @@
+---
+
+- name: Gather facts about worker with given name
+  delegate_to: "{{ k8s_worker_k8s_cli_host }}"
+  shell: |
+    set -o pipefail
+    kubectl get nodes -o wide \
+      | grep -w "{{ k8s_worker_name }}" \
+      | awk '{ print "- name: "$1"\n  status: "$2"\n  internal_ip: "$6 }'
+  changed_when: false
+  register: k8s_worker_raw_facts
+  failed_when: k8s_worker_raw_facts.rc not in [0, 1]
+
+- name: Extract data from yaml
+  set_fact:
+    k8s_worker_facts:
+      "{{ k8s_worker_raw_facts.stdout|from_yaml|first
+        if k8s_worker_raw_facts.stdout else '' }}"

@@ -1,5 +1,8 @@
 ---
 
+- name: Gather facts about master
+  import_tasks: gather_facts.yml
+
 - name: Ensure kubeadm config directory exists
   file:
     path: "{{ k8s_master_kubeadm_config_file | dirname }}"
@@ -7,16 +10,13 @@
     state: directory
   become: true
 
-- name: Template kubeadm config
-  template:
-    src: kubeadm.conf.j2
-    dest: "{{ k8s_master_kubeadm_config_file }}"
-  become: true
-
-- name: Master init
-  shell: |
-    kubeadm init --config "{{ k8s_master_kubeadm_config_file }}" --upload-certs
-  become: true
+- name: Configure master when not ready
+  when:
+    not k8s_master_already_exists
+    or not k8s_master_role_correct
+    or not k8s_master_ready
+  block:
+    - include_tasks: master_init.yml
 
 - name: Ensure kubectl config directory exists
   file:
