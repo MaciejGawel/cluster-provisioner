@@ -15,14 +15,14 @@ def deploy_kubernetes(machine)
     ansible.groups = {
       'masters' => CONFIG['masters'].map { |vm| vm['name'] },
       'workers' => CONFIG['workers'].map { |vm| vm['name'] },
-      'all_groups:children' => ['masters', 'workers'],
-      'all_groups:vars' => {
-        'k8s_version' => CONFIG.dig('k8s_version') || '1.18.2',
-        'master_cc_ip' => CONFIG['masters'][0]['cc_ip'],
-        'pod_subnet' => CONFIG['pod_subnet'],
-        'service_subnet' => CONFIG['service_subnet']
-      }
+      'all_groups:children' => ['masters', 'workers']
     }
+    ansible.extra_vars = {
+      'k8s_version' => CONFIG.dig('k8s_version'),
+      'master_cc_ip' => CONFIG['masters'][0]['cc_ip'],
+      'pod_subnet' => CONFIG['pod_subnet'],
+      'service_subnet' => CONFIG['service_subnet']
+  }.compact
   end
 end
 
