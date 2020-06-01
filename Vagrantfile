@@ -48,7 +48,7 @@ Vagrant.configure '2' do |config|
   config.vm.box = BOX_IMAGE
 
   config.vm.provider :libvirt do |libvirt|
-    libvirt.storage_pool_path = '/home/root/images-vagrant'
+    libvirt.storage_pool_path = CONFIG['storage_pool_path']
     libvirt.username          = 'vagrant'
     libvirt.password          = 'vagrant'
   end
