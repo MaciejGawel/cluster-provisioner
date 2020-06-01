@@ -11,5 +11,7 @@
     - name: Master init
       shell: |
         kubeadm reset --force
-        kubeadm init --config "{{ k8s_master_kubeadm_config_file }}" --upload-certs
+        kubeadm init --config "{{ k8s_master_kubeadm_config_file }}" --upload-certs \
+          --ignore-preflight-errors \
+            FileContent--proc-sys-net-bridge-bridge-nf-call-iptables,FileContent--proc-sys-net-bridge-bridge-nf-call-ip6tables
       become: true
