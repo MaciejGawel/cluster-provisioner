@@ -14,5 +14,7 @@
       become: true
 
     - name: Worker join
-      shell: "{{ k8s_worker_join_command.stdout }}"
+      shell: |
+        {{ k8s_worker_join_command.stdout }} --ignore-preflight-errors \
+        FileContent--proc-sys-net-bridge-bridge-nf-call-iptables,FileContent--proc-sys-net-bridge-bridge-nf-call-ip6tables
       become: true
