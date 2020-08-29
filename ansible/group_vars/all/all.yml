@@ -8,3 +8,5 @@ service_subnet: '10.10.1.0/24'
 
 initial_master: "{{ groups.masters | sort | first }}"
 k8s_cli_host: "{{ initial_master }}"
+
+cluster_name: 'kubernetes'

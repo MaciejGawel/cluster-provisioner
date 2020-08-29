@@ -19,6 +19,7 @@ def deploy_kubernetes(machine)
     }
     ansible.extra_vars = {
       'k8s_version' => CONFIG.dig('k8s_version'),
+      'cluster_name' => CONFIG.dig('cluster_name'),
       'master_cc_ip' => CONFIG['masters'][0]['cc_ip'],
       'pod_subnet' => CONFIG['pod_subnet'],
       'service_subnet' => CONFIG['service_subnet']

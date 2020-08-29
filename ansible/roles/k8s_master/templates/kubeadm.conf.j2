@@ -12,3 +12,6 @@ networking:
   podSubnet: "{{ k8s_master_pod_subnet }}"
   dnsDomain: cluster.local
   serviceSubnet: "{{ k8s_master_service_subnet }}"
+apiServer:
+  certSANs:
+  - "{{ k8s_master_cluster_name }}"

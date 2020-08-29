@@ -4,6 +4,7 @@ storage_pool_path: '/home/root/images-vagrant'
 
 pod_subnet: '10.11.0.0/16'
 service_subnet: '10.10.1.0/24'
+# cluster_name: 'kubernetes'
 # k8s_version: 1.18.2
 # verbose: -vvv
 
