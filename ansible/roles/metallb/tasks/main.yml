@@ -1,0 +1,45 @@
+---
+
+- name: Install MetalLB
+  run_once: true
+  delegate_to: "{{ metallb_k8s_cli_host }}"
+  delegate_facts: true
+  block:
+  - name: Ensure MetalLB manifests home exists
+    file:
+      path: "{{ metallb_manifests_dir }}"
+      owner: "{{ ansible_user_id | default(ansible_user | default(omit)) }}"
+      group: "{{ ansible_user_gid | default(omit) }}"
+      mode: 0775
+      state: directory
+    become: "{{ metallb_manifests_dir_require_become|bool }}"
+
+  - name: Generate MetalLB manifests file
+    template:
+      src: "{{ item }}.yaml.j2"
+      dest: "{{ metallb_manifests_dir }}/{{ item }}.yaml"
+    loop:
+      - namespace
+      - metallb
+      - configmap
+    become: "{{ metallb_manifests_dir_require_become|bool }}"
+
+  - name: Deploy MetalLB to k8s
+    command: "kubectl apply -f {{ metallb_manifests_dir }}/{{ item }}.yaml"
+    loop:
+      - namespace
+      - metallb
+      - configmap
+    register: metallb_kubectl_apply_result
+    changed_when:
+      "'created' in metallb_kubectl_apply_result.stdout
+      or 'changed' in metallb_kubectl_apply_result.stdout
+      or 'configured' in metallb_kubectl_apply_result.stdout"
+
+  - name: Generate missing secret
+    command: 'kubectl create secret generic -n metallb-system memberlist --from-literal=secretkey="$(openssl rand -base64 128)"'
+    register: metallb_secret_result
+    changed_when:
+      "'created' in metallb_secret_result.stdout
+      or 'changed' in metallb_secret_result.stdout
+      or 'configured' in metallb_secret_result.stdout"

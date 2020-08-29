@@ -30,3 +30,4 @@
   gather_facts: false
   roles:
     - calico
+    - metallb

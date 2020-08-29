@@ -1,0 +1,7 @@
+---
+
+metallb_k8s_cli_host: "{{ inventory_hostname }}"
+metallb_manifests_dir: /var/lib/metallb_manifests
+metallb_manifests_dir_require_become: true
+metallb_start: "192.168.1.240"
+metallb_start: "192.168.1.250"

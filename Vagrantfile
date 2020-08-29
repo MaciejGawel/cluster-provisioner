@@ -22,7 +22,9 @@ def deploy_kubernetes(machine)
       'cluster_name' => CONFIG.dig('cluster_name'),
       'master_cc_ip' => CONFIG['masters'][0]['cc_ip'],
       'pod_subnet' => CONFIG['pod_subnet'],
-      'service_subnet' => CONFIG['service_subnet']
+      'service_subnet' => CONFIG['service_subnet'],
+      'ext_start' => CONFIG['ext_start'],
+      'ext_end' => CONFIG['ext_end']
   }.compact
   end
 end

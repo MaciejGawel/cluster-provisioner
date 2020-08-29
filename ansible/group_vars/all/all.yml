@@ -6,6 +6,9 @@ master_cc_ip: '10.10.0.10'
 pod_subnet: '10.11.0.0/16'
 service_subnet: '10.10.1.0/24'
 
+ext_start: '192.168.1.240'
+ext_end: '192.168.1.250'
+
 initial_master: "{{ groups.masters | sort | first }}"
 k8s_cli_host: "{{ initial_master }}"
 
