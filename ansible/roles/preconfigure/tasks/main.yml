@@ -6,3 +6,10 @@
     state: latest
   become: yes
   loop: "{{ preconfigure_packages }}"
+
+- name: Disable firewalld
+  systemd:
+    name: firewalld
+    state: stopped
+    enabled: false
+  become: true

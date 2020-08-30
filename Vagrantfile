@@ -5,7 +5,7 @@ config_file = ENV['CONFIG'] || 'config.yml'
 CONFIG = YAML::load_file(File.join(__dir__, config_file))
 
 ENV['VAGRANT_DEFAULT_PROVIDER'] = 'libvirt'
-BOX_IMAGE                       = 'centos/7'.freeze
+BOX_IMAGE                       = CONFIG.dig('box') || 'centos/7'
 
 def deploy_kubernetes(machine)
   machine.vm.provision 'ansible' do |ansible|

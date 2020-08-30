@@ -1,7 +1,10 @@
 ---
 
 cluster_name: 'kubernetes'
+box: 'centos/8'
 # k8s_version: 1.18.2
+# storage_pool_path: '/home/root/images-vagrant'
+
 pod_subnet: '10.11.0.0/16'
 service_subnet: '10.10.1.0/24'
 registry_ip: '10.10.0.10'
