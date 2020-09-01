@@ -12,6 +12,12 @@
     - docker
     - k8s_prepare
 
+- name: Configure master
+  hosts: master
+  gather_facts: false
+  roles:
+    - docker_registry
+
 - name: Install Kuberntes master
   hosts: masters
   gather_facts: false

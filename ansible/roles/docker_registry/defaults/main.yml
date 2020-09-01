@@ -1,0 +1,14 @@
+---
+
+docker_registry_dir: "/mnt/registry"
+docker_registry_dir_require_become: true
+
+docker_registry_container_name: "registry"
+docker_registry_image: "registry:2"
+
+docker_registry_volumes:
+  - "{{ docker_registry_dir }}:/var/lib/registry:Z"
+
+docker_registry_port: 5000
+docker_registry_ports:
+  - "{{ docker_registry_port }}:5000"

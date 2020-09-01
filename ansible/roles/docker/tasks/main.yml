@@ -20,9 +20,21 @@
     state: latest
   become: true
 
+- name: Ensure that docker configuration directory exists
+  file:
+    path: /etc/docker
+    state: directory
+  become: true
+
+- name: Configure docke registry
+  template:
+    src: daemon.json.j2
+    dest: /etc/docker/daemon.json
+  become: true
+
 - name: Enable and start Docker
   systemd:
     name: docker
-    state: started
+    state: restarted
     enabled: true
   become: true
