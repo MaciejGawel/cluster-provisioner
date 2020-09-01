@@ -8,6 +8,7 @@ k8s_prepare_packages:
 
 k8s_prepare_hosts_file: /etc/hosts
 k8s_prepare_master_cc_ip: 10.10.0.10
+k8s_prepare_registry_host: 10.10.0.10
 
 k8s_prepare_firewall_ports:
   - 179/tcp

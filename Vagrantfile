@@ -21,10 +21,13 @@ def deploy_kubernetes(machine)
       'k8s_version' => CONFIG.dig('k8s_version'),
       'cluster_name' => CONFIG.dig('cluster_name'),
       'master_cc_ip' => CONFIG['masters'][0]['cc_ip'],
+      'registry_ip' => CONFIG['registry_ip'],
       'pod_subnet' => CONFIG['pod_subnet'],
       'service_subnet' => CONFIG['service_subnet'],
-      'ext_start' => CONFIG['ext_start'],
-      'ext_end' => CONFIG['ext_end']
+      'ext_start' => CONFIG.dig('ext_start'),
+      'ext_end' => CONFIG.dig('ext_end'),
+      'calico_eabled' => CONFIG.dig('calico_enabled'),
+      'metallb_eabled' => CONFIG.dig('metallb_enabled')
   }.compact
   end
 end
@@ -51,7 +54,7 @@ Vagrant.configure '2' do |config|
   config.vm.box = BOX_IMAGE
 
   config.vm.provider :libvirt do |libvirt|
-    libvirt.storage_pool_name = CONFIG.dig['storage_pool_name'] || 'default'
+    libvirt.storage_pool_name = CONFIG.dig('storage_pool_name') || 'default'
     libvirt.username          = 'vagrant'
     libvirt.password          = 'vagrant'
   end

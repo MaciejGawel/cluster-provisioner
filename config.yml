@@ -1,14 +1,21 @@
 ---
 
-# storage_pool_name: 'default'
-
+cluster_name: 'kubernetes'
+# k8s_version: 1.18.2
 pod_subnet: '10.11.0.0/16'
 service_subnet: '10.10.1.0/24'
-ext_start: '192.168.1.240'
-ext_end: '192.168.1.250'
-# cluster_name: 'kubernetes'
-# k8s_version: 1.18.2
+registry_ip: '10.10.0.10'
+
+# Calico
+calico_enabled: true
+
+# MetalLB
+metallb_enabled: true
+ext_start: '192.168.121.200'
+ext_end: '192.168.121.210'
+
 # verbose: -vvv
+# storage_pool_name: 'default'
 
 masters:
   - name: master1

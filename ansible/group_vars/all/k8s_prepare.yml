@@ -1,4 +1,5 @@
 ---
 
 k8s_prepare_master_cc_ip: "{{ master_cc_ip }}"
+k8s_prepare_registry_host: "{{ registry_ip }}"
 k8s_prepare_k8s_version: "{{ k8s_version }}"

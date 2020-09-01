@@ -1,5 +1,7 @@
 ---
 
 docker_repo: https://download.docker.com/linux/centos/docker-ce.repo
+docker_registry_host: registry
+docker_registry_port: 5000
 docker_insecure_registries:
-  - "registry:{{ docker_registry_port }}"
+  - "{{ docker_registry_host }}:{{ docker_registry_port }}"
