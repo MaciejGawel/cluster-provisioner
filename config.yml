@@ -1,6 +1,6 @@
 ---
 
-storage_pool_path: '/home/root/images-vagrant'
+# storage_pool_name: 'default'
 
 pod_subnet: '10.11.0.0/16'
 service_subnet: '10.10.1.0/24'
@@ -16,11 +16,9 @@ masters:
     host_port: 6445
     # cpus: 4
     # memory: 16384
-    # disk: 50
 
 workers:
   - name: worker1
     cc_ip: '10.10.0.11'
     # cpus: 4
     # memory: 16384
-    # disk: 50

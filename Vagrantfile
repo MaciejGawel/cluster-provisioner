@@ -36,14 +36,14 @@ def configure_worker(machine, machine_cfg)
   machine.vm.provider :libvirt do |libvirt|
     libvirt.cpus                  = machine_cfg.dig('cpus') || 4
     libvirt.memory                = machine_cfg.dig('memory') || 16384
-    libvirt.machine_virtual_size  = machine_cfg.dig('disk') || 50
+  # libvirt.machine_virtual_size  = machine_cfg.dig('disk') || 50
   end
 end
 
 def configure_master(machine, machine_cfg)
   configure_worker machine, machine_cfg
 
-  machine.vm.network :forwarded_port, guest: 6443, host: machine_cfg['host_port']
+  machine.vm.network :forwarded_port, guest: 6443, host: machine_cfg['host_port'], host_ip: '0.0.0.0'
   deploy_kubernetes machine
 end
 
@@ -51,7 +51,7 @@ Vagrant.configure '2' do |config|
   config.vm.box = BOX_IMAGE
 
   config.vm.provider :libvirt do |libvirt|
-    libvirt.storage_pool_path = CONFIG['storage_pool_path']
+    libvirt.storage_pool_name = CONFIG.dig['storage_pool_name'] || 'default'
     libvirt.username          = 'vagrant'
     libvirt.password          = 'vagrant'
   end
