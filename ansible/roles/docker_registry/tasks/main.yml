@@ -1,0 +1,29 @@
+---
+
+- name: Ensure that docker dir exists
+  file:
+    path: "{{ docker_registry_dir }}"
+    owner: "{{ ansible_user_id | default(ansible_user | default(omit)) }}"
+    group: "{{ ansible_user_gid | default(omit) }}"
+    mode: 0775
+    state: directory
+  become: "{{ docker_registry_dir_require_become|bool }}"
+
+- name: Run docker registry
+  docker_container:
+    name: "{{ docker_registry_container_name }}"
+    image: "{{ docker_registry_image }}"
+    state: started
+    restart_policy: always
+    volumes: "{{ docker_registry_volumes }}"
+    ports: "{{ docker_registry_ports }}"
+  become: true
+
+- name: Open firewall port
+  firewalld:
+    port: "{{ docker_registry_port }}/tcp"
+    permanent: true
+    state: enabled
+    immediate: true
+  ignore_errors: true
+  become: true
