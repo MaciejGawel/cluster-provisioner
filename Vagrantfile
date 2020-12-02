@@ -39,7 +39,7 @@ def configure_worker(machine, machine_cfg)
   machine.vm.provider :libvirt do |libvirt|
     libvirt.cpus                  = machine_cfg.dig('cpus') || 4
     libvirt.memory                = machine_cfg.dig('memory') || 16384
-  # libvirt.machine_virtual_size  = machine_cfg.dig('disk') || 50
+    libvirt.machine_virtual_size  = machine_cfg.dig('disk') || 50
   end
 end
 
@@ -62,6 +62,9 @@ Vagrant.configure '2' do |config|
   config.vm.provision 'shell', inline: <<-SHELL
     sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config
     systemctl restart sshd.service
+    yum install -y cloud-utils-growpart
+    growpart /dev/vda 1
+    xfs_growfs -d /
   SHELL
 
   # Configure workers
