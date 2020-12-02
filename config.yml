@@ -7,10 +7,10 @@ service_subnet: '10.10.1.0/24'
 registry_ip: '10.10.0.10'
 
 # Calico
-calico_enabled: true
+# calico_enabled: true
 
 # MetalLB
-metallb_enabled: true
+# metallb_enabled: true
 ext_start: '192.168.121.200'
 ext_end: '192.168.121.210'
 
@@ -23,9 +23,11 @@ masters:
     host_port: 6445
     # cpus: 4
     # memory: 16384
+    # disk: 50
 
 workers:
   - name: worker1
     cc_ip: '10.10.0.11'
     # cpus: 4
     # memory: 16384
+    # disk: 50

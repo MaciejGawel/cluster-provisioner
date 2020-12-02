@@ -13,6 +13,3 @@ initial_master: "{{ groups.masters | sort | first }}"
 k8s_cli_host: "{{ initial_master }}"
 
 cluster_name: 'kubernetes'
-
-metallb_enabled: true
-calico_enabled: true

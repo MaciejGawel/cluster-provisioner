@@ -1,5 +1,6 @@
 ---
 
+metallb_enabled: true
 metallb_k8s_cli_host: "{{ k8s_cli_host }}"
 metallb_start: "{{ ext_start }}"
 metallb_end: "{{ ext_end }}"

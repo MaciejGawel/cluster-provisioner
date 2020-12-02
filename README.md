@@ -18,6 +18,9 @@ yum install vagrant_2.2.9_x86_64.rpm
 vagrant plugin install vagrant-libvirt
 ```
 
+**NOTE:** Some older Centos versions require newer `binutils` package:
+`yum update binutils`.
+
 Add Centos box
 
 ```sh
