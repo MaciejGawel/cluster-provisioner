@@ -18,6 +18,7 @@ def deploy_kubernetes(machine)
       'all_groups:children' => ['masters', 'workers']
     }
     ansible.extra_vars = {
+      'ansible_python_interpreter' => '/usr/libexec/platform',
       'k8s_version' => CONFIG.dig('k8s_version'),
       'cluster_name' => CONFIG.dig('cluster_name'),
       'master_cc_ip' => CONFIG['masters'][0]['cc_ip'],
