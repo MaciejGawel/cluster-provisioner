@@ -7,7 +7,7 @@
 Install dependencies
 
 ```sh
-yum install libvirt-devel ruby-devel
+yum install gcc libvirt-devel ruby-devel
 ```
 
 Install Vagrant
