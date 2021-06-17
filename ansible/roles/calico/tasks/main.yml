@@ -4,7 +4,7 @@
   run_once: true
   delegate_to: "{{ calico_k8s_cli_host }}"
   delegate_facts: true
-  when: metallb_enabled
+  when: calico_enabled
   block:
     - name: Ensure Calico manifests home exists
       file:

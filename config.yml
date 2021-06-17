@@ -15,7 +15,7 @@ ext_start: '192.168.121.200'
 ext_end: '192.168.121.210'
 
 # verbose: -vvv
-# storage_pool_name: 'default'
+storage_pool_path: '/var/lib/libvirt/images'
 
 masters:
   - name: master1
