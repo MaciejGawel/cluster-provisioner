@@ -1,0 +1,12 @@
+---
+
+- name: Add node ip to kublet config
+  shell: "sed -i 's/KUBELET_EXTRA_ARGS$/KUBELET_EXTRA_ARGS --node-ip {{ k8s_postconfig_api_ip }}/' /usr/lib/systemd/system/kubelet.service.d/10-kubeadm.conf"
+  become: true
+
+- name: Reload and restart kubelet
+  systemd:
+    state: restarted
+    daemon_reload: true
+    name: kubelet
+  become: true

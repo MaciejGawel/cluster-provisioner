@@ -31,6 +31,12 @@
   roles:
     - k8s_worker
 
+- name: Reconfigure kubelet
+  hosts: all
+  gather_facts: true
+  roles:
+    - k8s_postconfig
+
 - name: Install cloud core components
   hosts: masters
   gather_facts: false
