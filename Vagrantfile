@@ -21,7 +21,7 @@ def deploy_kubernetes(machine)
       'ansible_python_interpreter' => '/usr/libexec/platform',
       'k8s_version' => CONFIG.dig('k8s_version'),
       'cluster_name' => CONFIG.dig('cluster_name'),
-      'master_cc_ip' => CONFIG['masters'][0]['cc_ip'],
+      'master_cc_ip' => CONFIG['masters'][0]['api_ip'],
       'registry_ip' => CONFIG['registry_ip'],
       'pod_subnet' => CONFIG['pod_subnet'],
       'service_subnet' => CONFIG['service_subnet'],
@@ -35,6 +35,7 @@ end
 
 def configure_worker(machine, machine_cfg)
   machine.vm.hostname = machine_cfg['name']
+  machine.vm.network :private_network, ip: machine_cfg['api_ip'], libvirt__network_name: 'api'
   machine.vm.network :private_network, ip: machine_cfg['cc_ip']
 
   machine.vm.provider :libvirt do |libvirt|
